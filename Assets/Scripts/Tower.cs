@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Tower : MonoBehaviour {
 
@@ -7,7 +6,7 @@ public class Tower : MonoBehaviour {
     public GameObject BulletPrefab;
     public int Price = 5;
 
-    float range = 10f;
+    public float range;
     float fireCooldown = 0.5f;
     float fireCooldownRemaining = 0f;
 

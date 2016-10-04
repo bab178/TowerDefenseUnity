@@ -1,18 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-    private int Health = 20;
-    private int Money = 100;
-
-	void Update () {
-	    if(Health <= 0)
-        {
-            GameOver();
-        }
-	}
+    int Health = 20;
+    int Money = 100;
 
     public bool BuyUnit(Tower unit)
     {
@@ -29,6 +21,11 @@ public class GameController : MonoBehaviour {
     public void TakeDamage(int damageTaken = 1)
     {
         Health -= damageTaken;
+
+        if (Health <= 0)
+        {
+            GameOver();
+        }
     }
 
     public void EarnMoney(int moneyEarned = 1)

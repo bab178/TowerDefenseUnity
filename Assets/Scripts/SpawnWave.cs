@@ -15,9 +15,15 @@ public class SpawnWave : MonoBehaviour {
         public int Spawned = 0;
     }
 
-    public GameObject Path;
-    public GameController gameController;
-    public Wave[] waves;
+    LevelController Path;
+    GameController GameController;
+    public Wave[] Waves;
+
+    void Start()
+    {
+        Path = FindObjectOfType<LevelController>();
+        GameController = FindObjectOfType<GameController>();
+    }
 
     void Update()
     {
@@ -26,11 +32,11 @@ public class SpawnWave : MonoBehaviour {
         {
             WaveCooldownRemaining = WaveCooldown;
             bool didSpawn = false;
-            foreach (var wave in waves)
+            foreach (var wave in Waves)
             {
                 if(wave.Spawned < wave.NumberInGroup)
                 {
-                    Spawn(wave.EnemyPrefab, Path);
+                    SpawnEnemy(wave.EnemyPrefab, Path);
                     wave.Spawned++;
                     didSpawn = true;
                     break;
@@ -44,11 +50,12 @@ public class SpawnWave : MonoBehaviour {
         }
     }
 
-    void Spawn(GameObject go, GameObject path)
+    void SpawnEnemy(GameObject go, LevelController path)
     {
         GameObject e = (GameObject)Instantiate(go, transform.position, transform.rotation);
         Enemy enemy = e.GetComponent<Enemy>();
-        enemy.gc = gameController;
+        enemy.rb = e.GetComponent<Rigidbody>();
+        enemy.gc = GameController;
         enemy.Path = path;
     }
 }

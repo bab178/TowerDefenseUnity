@@ -8,22 +8,23 @@ public class Enemy : MonoBehaviour {
     {
         public int Health = 1;
         public int Money = 10;
+        public float Speed = 5f;
 
         public Stats(Stats stats)
         {
             Health = stats.Health;
             Money = stats.Money;
+            Speed = stats.Speed;
         }
 
     }
 
     private int PathIndex = 0;
-    private float Speed = 5f;
     private List<Transform> PathNodes;
 
     public Stats stats;
     public Rigidbody rb;
-    public GameObject Path;
+    public LevelController Path;
     public GameController gc;
 
     public void TakeDamage(int damage)
@@ -64,7 +65,7 @@ public class Enemy : MonoBehaviour {
             var targetNodeTransform = PathNodes.ToArray()[PathIndex];
 
             Vector3 direction = targetNodeTransform.position - transform.localPosition;
-            float distance = Speed * Time.deltaTime;
+            float distance = stats.Speed * Time.deltaTime;
 
             if( direction.magnitude > distance ) {
                 transform.Translate(direction.normalized * distance, Space.World);
@@ -80,7 +81,6 @@ public class Enemy : MonoBehaviour {
     }
 
     void ReachedEnd() {
-        //TODO: player take damage
         gc.TakeDamage();
         Destroy(gameObject);
     }
